@@ -3,8 +3,8 @@ log: pretty
 
 dir_rule:
   base_dir: ${JM_DOWNLOAD_DIR}
-  # Bd 是基础目录，_ 是分层，Aid-Atitle 是最终文件夹名
-  rule: Bd_Aid-Atitle
+  # 把原来的 Bd_Aauthor_Atitle_Pindex 改成 Bd_Aid_Atitle
+  rule: Bd_Aid_Atitle
 
 client:
   impl: api # 使用api可免登录下载本子
