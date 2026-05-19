@@ -3,12 +3,12 @@ log: pretty
 
 dir_rule:
   base_dir: ${JM_DOWNLOAD_DIR}
-  # 将规则修改为：基础目录(Bd) -> 本子ID(Aid)_本子名(Atitle)
-  # 这样生成的结构就是两层：下载目录 / 12345_本子名称 / 图片.jpg
-  rule: Bd_Aid_Atitle
+  # 使用完整路径与大括号包裹，斜杠前是基础下载目录，斜杠后是“本子ID_本子名称”，确保只有绝对的两层
+  rule: '${JM_DOWNLOAD_DIR}/{Aid}_{Atitle}'
 
-# 可选建议：如果下载的本子包含多个章节（多 Photo），为了防止不同章节内的同名图片互相覆盖，建议加上 image_rule
-# image_rule: Pindex_Fname # 这样图片会命名为 "章节号_原文件名.jpg" (例如: 1_00001.jpg)
+# 【关键补充】防止“上+下”等多章节本子的同名图片互相覆盖！
+# 开启后，图片会按照“章节号_图片名.jpg”命名（例如：1_00001.jpg 和 2_00001.jpg，安全存放在同一个文件夹内）
+image_rule: Pindex_Fname
 
 client:
   impl: api # 使用api可免登录下载本子
