@@ -1,19 +1,21 @@
 # GitHub Actions 下载脚本配置
+# GitHub Actions 下载脚本配置
 log: pretty
 
 dir_rule:
   base_dir: ${JM_DOWNLOAD_DIR}
-  # 使用完整路径与大括号包裹，斜杠前是基础下载目录，斜杠后是“本子ID_本子名称”，确保只有绝对的两层
-  rule: '${JM_DOWNLOAD_DIR}/{Aid}_{Atitle}'
+  # 使用横杠连接，完美绕过 jmcomic 的下划线分层机制
+  rule: Bd_Aid-Atitle
 
-# 【关键补充】防止“上+下”等多章节本子的同名图片互相覆盖！
-# 开启后，图片会按照“章节号_图片名.jpg”命名（例如：1_00001.jpg 和 2_00001.jpg，安全存放在同一个文件夹内）
+# 防止多章节本子的同名图片覆盖
 image_rule: Pindex_Fname
 
 client:
-  impl: api # 使用api可免登录下载本子
+  impl: api
   domain:
     html: [ jmcomic1.me, jmcomic.me ]
+
+# ... 下面的 plugins 部分保持你原来的不变即可
 
 # 插件配置
 plugins:
