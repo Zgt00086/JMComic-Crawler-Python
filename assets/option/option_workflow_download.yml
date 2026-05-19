@@ -3,36 +3,35 @@ log: pretty
 
 dir_rule:
   base_dir: ${JM_DOWNLOAD_DIR}
-  # 规则：ID_标题，且不自动创建分册子文件夹（关键！实现两层目录）
   rule: Aid_Atitle
-  # 禁止生成分册子文件夹，图片直接在一级本子文件夹里
-  folder_format: flat
+  # 核心：禁止生成分册子文件夹，图片直接在本子目录，实现两层结构
+  no_album_folder: true
 
 client:
-  impl: api # 使用api可免登录下载本子
+  impl: api
   domain:
     html: [ jmcomic1.me, shturl.cc/ ]
 
 # 插件配置
 plugins:
   after_init:
-    - plugin: usage_log # 实时打印硬件占用率的插件
+    - plugin: usage_log
       kwargs:
-        interval: 0.5 # 间隔时间
-        enable_warning: false # 不告警
+        interval: 0.5
+        enable_warning: false
 
-    - plugin: client_proxy # 提高移动端的请求效率的插件
+    - plugin: client_proxy
       kwargs:
         proxy_client_key: photo_concurrent_fetcher_proxy
         whitelist: [ api, ]
 
-    - plugin: login # 登录插件
+    - plugin: login
       kwargs:
         username: ${JM_USERNAME}
         password: ${JM_PASSWORD}
 
-  after_download: # 全部下载完成以后
-    - plugin: send_qq_email # 发送邮件，如果未配置下面的前3个环境变量则不会发送。
+  after_download:
+    - plugin: send_qq_email
       kwargs:
         msg_from: ${EMAIL_FROM}
         msg_to: ${EMAIL_TO}
