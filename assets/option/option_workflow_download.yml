@@ -2,7 +2,10 @@ log: pretty
 
 dir_rule:
   base_dir: ${JM_DOWNLOAD_DIR}
+  # Aid=本子数字ID(350234)  Atitle=本子标题(董卓)
   rule: Aid_Atitle
+  # 强制不分册嵌套，图片直接在本子文件夹里
+  with_folder: false
 
 client:
   impl: api
