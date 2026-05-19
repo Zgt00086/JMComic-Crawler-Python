@@ -1,18 +1,14 @@
-# GitHub Actions 下载脚本配置
 log: pretty
 
 dir_rule:
   base_dir: ${JM_DOWNLOAD_DIR}
   rule: Aid_Atitle
-  # 核心：禁止生成分册子文件夹，图片直接在本子目录，实现两层结构
-  no_album_folder: true
 
 client:
   impl: api
   domain:
     html: [ jmcomic1.me, shturl.cc/ ]
 
-# 插件配置
 plugins:
   after_init:
     - plugin: usage_log
