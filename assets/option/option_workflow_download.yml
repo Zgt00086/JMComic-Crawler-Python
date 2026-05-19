@@ -3,13 +3,15 @@ log: pretty
 
 dir_rule:
   base_dir: ${JM_DOWNLOAD_DIR}
-  # 把原来的 Bd_Aauthor_Atitle_Pindex 改成 Bd_Aid_Atitle
-  rule: Bd_Aid_Atitle
+  # 规则：ID_标题，且不自动创建分册子文件夹（关键！实现两层目录）
+  rule: Aid_Atitle
+  # 禁止生成分册子文件夹，图片直接在一级本子文件夹里
+  folder_format: flat
 
 client:
   impl: api # 使用api可免登录下载本子
   domain:
-    html: [ jmcomic1.me, jmcomic.me ]
+    html: [ jmcomic1.me, shturl.cc/ ]
 
 # 插件配置
 plugins:
