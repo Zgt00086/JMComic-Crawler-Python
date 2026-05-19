@@ -1,33 +1,40 @@
+# GitHub Actions 下载脚本配置
 log: pretty
 
 dir_rule:
   base_dir: ${JM_DOWNLOAD_DIR}
-  rule: Bd_Aid_Atitle_NoP
+  # 将规则修改为：基础目录(Bd) -> 本子ID(Aid)_本子名(Atitle)
+  # 这样生成的结构就是两层：下载目录 / 12345_本子名称 / 图片.jpg
+  rule: Bd_Aid_Atitle
+
+# 可选建议：如果下载的本子包含多个章节（多 Photo），为了防止不同章节内的同名图片互相覆盖，建议加上 image_rule
+# image_rule: Pindex_Fname # 这样图片会命名为 "章节号_原文件名.jpg" (例如: 1_00001.jpg)
 
 client:
-  impl: api
+  impl: api # 使用api可免登录下载本子
   domain:
-    html: [ jmcomic1.me, shturl.cc/ ]
+    html: [ jmcomic1.me, jmcomic.me ]
 
+# 插件配置
 plugins:
   after_init:
-    - plugin: usage_log
+    - plugin: usage_log # 实时打印硬件占用率的插件
       kwargs:
-        interval: 0.5
-        enable_warning: false
+        interval: 0.5 # 间隔时间
+        enable_warning: false # 不告警
 
-    - plugin: client_proxy
+    - plugin: client_proxy # 提高移动端的请求效率的插件
       kwargs:
         proxy_client_key: photo_concurrent_fetcher_proxy
         whitelist: [ api, ]
 
-    - plugin: login
+    - plugin: login # 登录插件
       kwargs:
         username: ${JM_USERNAME}
         password: ${JM_PASSWORD}
 
-  after_download:
-    - plugin: send_qq_email
+  after_download: # 全部下载完成以后
+    - plugin: send_qq_email # 发送邮件，如果未配置下面的前3个环境变量则不会发送。
       kwargs:
         msg_from: ${EMAIL_FROM}
         msg_to: ${EMAIL_TO}
